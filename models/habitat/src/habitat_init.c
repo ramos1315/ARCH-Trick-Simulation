@@ -84,8 +84,8 @@ int habitat_init(Habitat *H)
     H->life_support.backup_o2.days_of_backup       = 11.0;
 
     /* SBAR CO₂ scrubber */
-    H->life_support.sbar.max_removal_mol_s    = 0.001578;  /* from report */
-    H->life_support.sbar.current_removal_mol_s = 0.001578;
+    H->life_support.sbar.max_removal_mol_s    = 0.002083;  /* from report */
+    H->life_support.sbar.current_removal_mol_s = 0.002083;
     H->life_support.sbar.sorbent_efficiency   = 1.0;
     H->life_support.sbar.degradation_rate     = 1.0e-10;   /* very slow */
     H->life_support.sbar.power_draw_w         = 1500.0;
