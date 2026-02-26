@@ -7,7 +7,7 @@
  * and qualitative risk level per the ARCH risk framework.
  */
 
-#include "../include/habitat.h"
+#include "habitat/include/habitat.h"
 #include <math.h>
 #include <stdio.h>
 

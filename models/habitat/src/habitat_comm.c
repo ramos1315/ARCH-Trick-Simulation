@@ -6,7 +6,7 @@
  * optical and RF link availability, and blackout detection.
  */
 
-#include "../include/habitat.h"
+#include "habitat/include/habitat.h"
 #include <math.h>
 
 /* Relay satellite orbital parameters (simplified) */

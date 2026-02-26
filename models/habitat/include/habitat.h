@@ -17,6 +17,19 @@
  * Reference: ARCH Conceptual System Analysis and Design Report, Feb 2026
  */
 
+
+/*
+PURPOSE: ARCH Habitat model data structures and prototypes.
+
+LIBRARY DEPENDENCY:
+    ((habitat/src/habitat_init.c)
+     (habitat/src/habitat_atmosphere.c)
+     (habitat/src/habitat_power.c)
+     (habitat/src/habitat_thermal.c)
+     (habitat/src/habitat_comm.c)
+     (habitat/src/habitat_structure.c)
+     (habitat/src/habitat_risk.c))
+*/
 #ifndef HABITAT_H
 #define HABITAT_H
 

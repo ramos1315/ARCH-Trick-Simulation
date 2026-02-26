@@ -9,7 +9,7 @@
  *   - PMAD load balancing, fault isolation, load shedding
  */
 
-#include "../include/habitat.h"
+#include "habitat/include/habitat.h"
 #include <math.h>
 
 int habitat_power_update(Habitat *H)

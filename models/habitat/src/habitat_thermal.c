@@ -8,7 +8,7 @@
  *   dT/dt = (Q_in - Q_out) / (m_air * Cp_air)
  */
 
-#include "../include/habitat.h"
+#include "habitat/include/habitat.h"
 #include <math.h>
 
 /* Air thermal properties */

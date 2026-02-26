@@ -6,7 +6,7 @@
  * from the Conceptual System Analysis and Design Report.
  */
 
-#include "../include/habitat.h"
+#include "habitat/include/habitat.h"
 #include <string.h>
 #include <math.h>
 

@@ -10,7 +10,7 @@
  *   - Backup O₂ (compressed tanks + oxygen candles) supervisory logic
  */
 
-#include "../include/habitat.h"
+#include "habitat/include/habitat.h"
 #include <math.h>
 #include <stdlib.h>
 

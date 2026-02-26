@@ -6,7 +6,7 @@
  * and pressure integrity.
  */
 
-#include "../include/habitat.h"
+#include "habitat/include/habitat.h"
 #include <math.h>
 
 int habitat_structure_update(Habitat *H)
