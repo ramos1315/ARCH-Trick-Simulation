@@ -101,7 +101,7 @@ int habitat_init(Habitat *H)
     H->life_support.phototherm.capture_efficiency    = 0.85;
     H->life_support.phototherm.water_consumption_kg_s = 0.0001;
     H->life_support.phototherm.power_draw_w          = 2000.0;
-    H->life_support.phototherm.catalyst_degradation  = 5.0e-10;
+    H->life_support.phototherm.catalyst_degradation  = 1.0e-11;
     H->life_support.phototherm.is_active             = 1;
     H->life_support.phototherm.has_fault             = 0;
     H->life_support.phototherm.trip_probability      = 1.0e-6;
@@ -163,7 +163,7 @@ int habitat_init(Habitat *H)
     H->thermal.metabolic_heat_w    = NUM_CREW * METABOLIC_HEAT_W;
     H->thermal.equipment_heat_w    = 5000.0;
     H->thermal.radiator_area_m2    = 50.0;
-    H->thermal.insulation_r_value  = 8.0;  /* regolith + shell */
+    H->thermal.insulation_r_value  = 20.0;  /* regolith + shell */
     H->thermal.exterior_temp_k     = 100.0; /* ~south pole shadow */
     H->thermal.heater_power_draw_w = 0.0;
     H->thermal.pump_active         = 1;
