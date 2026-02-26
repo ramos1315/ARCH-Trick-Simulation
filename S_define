@@ -1,0 +1,60 @@
+/******************************************************************************
+ * S_define – ARCH Autonomous Resilient Cislunar Habitat
+ *
+ * NASA Trick Simulation Definition File
+ *
+ * This S_define declares the simulation objects and schedules the
+ * model jobs (initialization, scheduled, shutdown) that Trick will
+ * manage during execution.
+ *
+ * Subsystems modeled:
+ *   Cabin atmosphere, Life support (OGS/SBAR/Photothermal/Backup O₂),
+ *   Power (MSMR nuclear + fuel cell + battery + PMAD),
+ *   Thermal control, Communications, Structure, Risk management
+ *
+ * Reference: ARCH Conceptual System Analysis & Design Report, Feb 2026
+ ******************************************************************************/
+
+/*============================================================================
+ * Include the Trick system sim object (provides exec, memory mgr, etc.)
+ *============================================================================*/
+#include "sim_objects/default_trick_sys.sm"
+
+/*============================================================================
+ * ARCH Habitat Simulation Object
+ *============================================================================*/
+
+##include "habitat/include/habitat.h"
+
+class ARCHSimObject : public Trick::SimObject {
+
+    public:
+        Habitat habitat;   /**< Top-level habitat data structure */
+
+        ARCHSimObject() {
+
+            /* ---- Initialization job (runs once at sim start) ---- */
+            ("initialization") habitat_init(&habitat);
+
+            /* ---- Scheduled jobs (run each time step) ------------ */
+            /* Order matters: atmosphere depends on LS, LS depends
+               on power, etc.  Trick phase ordering ensures correct
+               sequencing within each time step.                     */
+
+            (1.0, "scheduled") habitat_atmosphere_update(&habitat);
+            (1.0, "scheduled") habitat_life_support_update(&habitat);
+            (1.0, "scheduled") habitat_power_update(&habitat);
+            (1.0, "scheduled") habitat_thermal_update(&habitat);
+            (1.0, "scheduled") habitat_comm_update(&habitat);
+            (1.0, "scheduled") habitat_structure_update(&habitat);
+            (1.0, "scheduled") habitat_risk_update(&habitat);
+
+            /* ---- Shutdown job (runs once at sim end) ------------ */
+            ("shutdown") habitat_shutdown(&habitat);
+        }
+};
+
+/*============================================================================
+ * Instantiate the simulation object
+ *============================================================================*/
+ARCHSimObject arch;

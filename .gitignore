@@ -1,0 +1,14 @@
+S_main_*.exe
+S_source.hh
+S_library_list
+S_sie.resource
+build/
+trick/
+*.o
+*.d
+*.pyc
+__pycache__/
+RUN_*/log_*/
+RUN_*/send_hs*
+.vscode/
+.idea/

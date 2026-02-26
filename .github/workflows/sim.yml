@@ -1,0 +1,77 @@
+name: ARCH Habitat Simulation
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout ARCH Simulation
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            bison clang flex git llvm make maven swig cmake \
+            curl g++ libx11-dev libxml2-dev libxt-dev \
+            libmotif-common libmotif-dev \
+            python3-dev zlib1g-dev llvm-dev libclang-dev \
+            libudunits2-dev libgtest-dev default-jdk zip
+
+      - name: Cache Trick installation
+        id: cache-trick
+        uses: actions/cache@v4
+        with:
+          path: ~/trick
+          key: trick-${{ runner.os }}-v1
+
+      - name: Build NASA Trick
+        if: steps.cache-trick.outputs.cache-hit != 'true'
+        run: |
+          cd $HOME
+          git clone https://github.com/nasa/trick.git
+          cd trick
+          export PYTHON_VERSION=3
+          ./configure
+          make -j$(nproc)
+
+      - name: Configure environment
+        run: |
+          echo "TRICK_HOME=$HOME/trick" >> $GITHUB_ENV
+          echo "$HOME/trick/bin" >> $GITHUB_PATH
+          echo "PYTHON_VERSION=3" >> $GITHUB_ENV
+
+      - name: Build ARCH simulation
+        run: trick-CP
+
+      - name: Run nominal mission
+        run: ./S_main_*.exe RUN_nominal/input.py
+
+      - name: Run OGS failure scenario
+        run: ./S_main_*.exe RUN_failure/input.py
+
+      - name: Upload nominal results
+        uses: actions/upload-artifact@v4
+        with:
+          name: nominal-mission-results
+          path: RUN_nominal/log_*/**
+          if-no-files-found: warn
+
+      - name: Upload failure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: ogs-failure-results
+          path: RUN_failure/log_*/**
+          if-no-files-found: warn
+
+      - name: Print summary
+        if: always()
+        run: |
+          echo "==== ARCH Simulation Complete ===="
+          find RUN_nominal RUN_failure -name "*.csv" -o -name "*.trk" 2>/dev/null || echo "Check artifacts for results"
