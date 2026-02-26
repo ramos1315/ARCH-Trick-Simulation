@@ -1,15 +1,6 @@
-/*******************************************************************************
- * RUN_nominal/input.py – ARCH Habitat Nominal 90-Day Mission
- *
- * Trick input file (Python syntax) for a full three-month mission
- * with all subsystems operating nominally.
- *
- * Usage:  trick-CP  then  ./S_main_*.exe RUN_nominal/input.py
- ******************************************************************************/
-
-# ============================================================================
-#  Simulation executive setup
-# ============================================================================
+# RUN_nominal/input.py - ARCH Habitat Nominal 90-Day Mission
+# Trick input file (Python syntax) for a full three-month mission
+# with all subsystems operating nominally.
 
 # Mission duration: 90 days in seconds
 mission_duration = 90 * 24 * 3600  # 7,776,000 seconds
@@ -22,11 +13,6 @@ trick.exec_set_freeze_frame(0.0)
 # Real-time: OFF (run as fast as possible)
 trick.real_time_disable()
 
-# ============================================================================
-#  Nominal parameter overrides (defaults from habitat_init are fine,
-#  but we can tune here if needed)
-# ============================================================================
-
 # Crew
 arch.habitat.crew_count          = 6
 arch.habitat.crew_activity_factor = 1.0
@@ -36,32 +22,28 @@ arch.habitat.cabin.o2_pct   = 20.9
 arch.habitat.cabin.co2_ppm  = 400.0
 arch.habitat.cabin.temperature_k = 295.15
 
-# Power – reactor at full output
+# Power - reactor at full output
 arch.habitat.power.msmr.is_active = 1
 arch.habitat.power.msmr.scram     = 0
 
-# Life support – all systems active
+# Life support - all systems active
 arch.habitat.life_support.ogs.is_active         = 1
 arch.habitat.life_support.sbar.is_active        = 1
 arch.habitat.life_support.phototherm.is_active  = 1
 
-# Thermal – pump active
+# Thermal - pump active
 arch.habitat.thermal.pump_active = 1
 
-# Communications – both links up
+# Communications - both links up
 arch.habitat.comm.optical_link_up = 1
 arch.habitat.comm.rf_link_up      = 1
 
-# Structure – no damage
+# Structure - no damage
 arch.habitat.structure.hull_breach = 0
 
-# ============================================================================
-#  Data recording
-# ============================================================================
-
-# Record key variables at 60-second intervals for post-processing
+# Data recording
 drg = trick.DRAscii("ARCH_Nominal")
-drg.set_cycle(60.0)     # record every 60 seconds
+drg.set_cycle(60.0)
 drg.set_freq(trick.DR_Always)
 
 # Mission clock
@@ -119,11 +101,8 @@ drg.add_variable("arch.habitat.risk.o2_tank_margin_days")
 
 trick.add_data_record_group(drg)
 
-# ============================================================================
-#  Print confirmation
-# ============================================================================
 print("=" * 60)
-print("  ARCH Habitat – Nominal 90-Day Mission")
+print("  ARCH Habitat - Nominal 90-Day Mission")
 print("  Crew: 6  |  Duration: 90 days  |  dt = 1.0 s")
 print("  All subsystems nominal")
 print("=" * 60)
